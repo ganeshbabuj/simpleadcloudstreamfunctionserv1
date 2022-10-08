@@ -1,0 +1,24 @@
+spring.cloud.stream:
+  function:
+    definition: processAccount
+  bindings:
+    processAccount-in-0:
+      destination: user-registration
+    processAccount-out-0:
+      destination: account-activation
+  kafka:
+    bindings:
+      processAccount-in-0:
+        consumer:
+          configuration:
+            value:
+              deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      processAccount-out-0:
+        producer:
+          configuration:
+            value:
+              serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    streams:
+      binder:
+        brokers:
+          - ec2-3-7-157-60.ap-south-1.compute.amazonaws.com:9092
